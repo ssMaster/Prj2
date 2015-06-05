@@ -6,8 +6,12 @@ Due: June 4, 2015
 
 #include "InputOutput.h"
 
+InputOutput::InputOutput(){
+
+}
+
 InputOutput::~InputOutput(){
-	delete[] sentence;
+	//delete[] sentence;
 }
 
 bool InputOutput::openInFile(char* filename){
@@ -15,11 +19,11 @@ bool InputOutput::openInFile(char* filename){
 	inFile.open(filename, ifstream::in);
 
 	if (inFile.is_open()){
-		cout << "File is open." << endl;
+		cout << "Input file is open." << endl;
 		return true;
 	}
 	else{
-		cout << "File not opened..." << endl;
+		cout << "Input file not opened..." << endl;
 		return false;
 	}
 
@@ -27,14 +31,14 @@ bool InputOutput::openInFile(char* filename){
 
 bool InputOutput::openOutFile(char* filename){
 	// Attempt to open the output file
-	outFile.open(filename, ifstream::out);
+	outFile.open(filename, ofstream::out);
 	
 	if (outFile.is_open()){
-		cout << "File is open." << endl;
+		cout << "Output file is open." << endl;
 		return true;
 	}
 	else{
-		cout << "File not opened..." << endl;
+		cout << "Output file not opened..." << endl;
 		return false;
 	}
 }
@@ -67,7 +71,6 @@ bool InputOutput::extractSentence(){
 		str.copy(sentence, length, 0);
 		sentence[length] = '\0';
 
-		//cout << "Current sentence: " << sentence << endl;
 		return true;
 	}
 	else{
@@ -77,58 +80,21 @@ bool InputOutput::extractSentence(){
 	
 }
 
-/*
-bool InputOutput::extractSentence(){
-	static int count = 0;
-
-	string line = "";
-	string file = "";
-	const char* endPunc = ".;:?!";
-	size_t length;
-	char *cstr;
-	char* sentenceToken;
-	
-	while (!inFile.eof()){
-
-		getline(inFile, line);	// reads a line
-		
-		file.append(line);
-		//return true;
-	}
-	
-	// =============================================================
-
-	length = file.size();
-	cstr = new char[length + 1];
-	
-	// copy characters from the line into allocated memory
-	file.copy(cstr, length, 0);
-	cstr[length] = '\0';	// add null terminator
-
-	sentenceToken = strtok(cstr, endPunc);
-	while (sentenceToken != NULL){
-		cout << "Token: " << sentenceToken;
-		sentenceToken = strtok(NULL, endPunc);
-
-		cout << " and count is: " << count << endl;
-		count++;
-	}
-
-	delete[] cstr;
-
-	// =============================================================
-
-	//else{
-	return false;
-	//}
-}
-*/
-
 void InputOutput::generateOutput(){
+	outFile << "Constructing a new report..." << endl << endl;
 
+	
 }
 
 char* InputOutput::getSentence(){
 	return sentence;
 }
+
+ofstream & InputOutput::getOut(){
+	return outFile;
+}
+
+
+
+
 

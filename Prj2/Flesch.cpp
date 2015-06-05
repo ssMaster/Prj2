@@ -7,10 +7,12 @@ Due: June 4, 2015
 using namespace std;
 
 #include "Flesch.h"
-//#include "Dictionary.h"
 
 // Constructor
 Flesch::Flesch(){
+	
+	// =====================
+
 	numWords = 0;
 	numSentences = 0;
 	numSyllables = 0;
@@ -66,14 +68,6 @@ Analyze the given sentence and update the parameters for the Flesch Readability 
 computation and dictionary.
 */
 void Flesch::analyzeSentence(char* sentence, Dictionary *dictionary){
-	cout << "The given sentence: " << sentence << endl;
-
-	cout << "Dictionary: " << dictionary << endl;
-	(*dictionary).display();
-
-	// =====================================================================================
-
-	cout << "============================== Extracting words from sentence" << endl << endl;
 	char **tok;
 	int *syl;
 	int words;
@@ -86,11 +80,9 @@ void Flesch::analyzeSentence(char* sentence, Dictionary *dictionary){
 	for (int i = 0; i < words; i++){
 		// Count the number of syllables in each word
 		syl[i] = countSyllablesIn(tok[i]);
-
-		cout << "The word: \t" << tok[i] << " has:\t" << syl[i] << " syllables." << endl;
+		cout << "Sylls " << syl[i] << endl;
+		numSyllables += syl[i];
 	}
-
-	cout << "Words in sentence: " << words << endl;
 
 	char** dictWords = (*dictionary).getWords();
 	
@@ -98,8 +90,6 @@ void Flesch::analyzeSentence(char* sentence, Dictionary *dictionary){
 
 		// Add words to the dictionary
 		dictWords[i] = tok[j];
-		cout << "Place for word: \t" << i << " and the word is: " << tok[j] << endl;
-
 		j++;
 	}
 
@@ -114,13 +104,6 @@ void Flesch::analyzeSentence(char* sentence, Dictionary *dictionary){
 	// =====================================
 
 	// Deallocate the memory -- error when using loop
-	//if (tok != NULL){
-	//	int words = getNumWordsInSentence();
-	//	for (int i = 0; i < words-1; i++){
-	//		//delete[] tok;
-	//	}
-	//}
-
 	delete[] tok;
 	delete[] syl;
 }
@@ -145,12 +128,10 @@ char** Flesch::nextWordIn(char* sentence){
 		count++;
 		token = strtok(NULL, " ");
 	}
-	//setNumWordsInSentence(count);
-	numWordsInSentence = count;
+	setNumWordsInSentence(count);
+	//numWordsInSentence = count;
 
 	// ==================
-
-	// delete[] theSentence; --- this is the one that gives the error
 
 	return words;
 }
@@ -163,7 +144,6 @@ int Flesch::countSyllablesIn(char* word){
 	
 	for (int i = 0; word[i] != '\0'; i++){
 		tolower(word[i]);
-		//cout << word[i] << " ";
 
 		if (word[i] == 'a' || word[i] == 'e' || word[i] == 'i' || word[i] == 'o' || word[i] == 'u' || word[i] == 'y'){
 			if (word[i + 1] == 'a' || word[i + 1] == 'e' || word[i + 1] == 'i' || word[i + 1] == 'o' || word[i + 1] == 'u' || word[i + 1] == 'y'){
@@ -179,7 +159,11 @@ int Flesch::countSyllablesIn(char* word){
 			}
 		}
 	}
+
+	//numSyllables += count;
+
 	// ============
+
 	if (count == 0){
 		return 1;
 	}
@@ -233,3 +217,4 @@ int Flesch::getNumSyllables(){
 int Flesch::getNumWordsInSentence(){
 	return numWordsInSentence;
 }
+

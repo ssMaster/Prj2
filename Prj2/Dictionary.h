@@ -4,14 +4,18 @@ Project 2
 Due: June 4, 2015
 */
 
-#ifndef IO_H
-#define IO_H
+#ifndef OTHER_H
+#define OTHER_H
 
 #include <iostream>
+#include <math.h>
 #include <string>
+#include <map>
+#include <algorithm>
+#include <iomanip>
+#include <fstream>
 
 #endif;
-
 
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
@@ -26,7 +30,7 @@ public:
 	void display();
 
 	void setWords(char** theWords);
-	//int getOccurrences();	// accessor
+	int* getOccurrences();	// accessor
 	char** getWords();		// accessor
 private:
 	char** words;

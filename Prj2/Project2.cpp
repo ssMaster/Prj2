@@ -10,57 +10,57 @@ Due: June 4, 2015
 
 #include "InputOutput.h"
 #include "Flesch.h"
+#include "Dictionary.h"
 
 int main(){
+	Flesch f;
+	Dictionary d;
 	InputOutput io;
 
-	// Attempt to open the input file
-	io.openInFile("SmallSample2.txt");
+	ofstream o;
 
-	// Attempt to open the output file
+	char* s;
 
+	io.openInFile("SmallSample1.txt");
+	io.openOutFile("Testing.out");
 
-	// Test the extract sentence method --- works, but may need some tuning
+	//o = io.getOut();
+
+	io.generateOutput();
+
 	bool flag = true;
 	while (flag){
 		flag = io.extractSentence();
 		if (flag){
-			cout << "The current sentence is: " << io.getSentence() << endl;
+			f.setNumSentences(f.getNumSentences() + 1);
+			s = io.getSentence();
+			f.analyzeSentence(s, &d);
 		}
+
 	}
-	
-	// =================================
 
-	// Test fleschRating method --- works
-	Flesch f;
-	double index;
 	f.fleschRating();
-	index = f.getIndex();
-	cout << "Flesch index for " << f.getNumWords() << " words and " << f.getNumSentences() << " sentence(s) and " << f.getNumSyllables() << " syllable(s) is " << index << endl;
+	int index = f.getIndex();
 
-	cout << endl << "================" << endl << endl;
+	io.getOut() << "Number of sentences: " << f.getNumSentences() << endl;
+	io.getOut() << "Number of words: " << f.getNumWords() << endl;
+	io.getOut() << "Number of syllables: " << f.getNumSyllables() << endl;
+	io.getOut() << "Flesch Readability Index: " << index << " " << f.levelOf(index) << endl << endl;
 
-	// ================================================================= Testing analyzeSentence and Dictionary methods
+	io.getOut() << "Dictionary" << endl;
+	io.getOut() << "d.display()" << endl;
 
-	Dictionary dict;
-	Flesch fle;
+	//d.display();
 
-	char* sentence = "This is the sentence that, I, will use and usee.";
-	char* sentence2 = "This is, of course the second sentence";
-	cout << "The sentence: " << sentence << endl;
-	
-	fle.analyzeSentence(sentence, &dict);
-	cout << endl << "-------------" << endl << endl << "Analyzing next sentence..." << endl;
-	fle.analyzeSentence(sentence2, &dict);
+	//int* occurs = d.getOccurrences();
 
-	cout << "Total words: " << fle.getNumWords() << endl;
+	/*int count = f.getNumWords();
 
-	// print out words in dictionary: ------- working!!
-	/*char** words = dict.getWords();
-	int numWords = fle.getNumWords();
+	cout << "Num words: " << count << endl;
 
-	for (int i = 0; i < numWords; i++){
-		cout << "Dictionary: " << i << ":\t" << words[i] << endl;
+	for (int i = 0; i < 5; i++){
+		cout << "Occurs: " << occurs[i] << endl;
+
 	}*/
 	
 	return 0;
